@@ -1,7 +1,7 @@
 const trimTrailingSlash = (value) => value.replace(/\/+$/, "");
 
 export const APP_URL = trimTrailingSlash(
-  process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3001"
+  process.env.NEXT_PUBLIC_APP_URL || "https://app.caimaneraapp.online"
 );
 
 export const SITE_URL = trimTrailingSlash(

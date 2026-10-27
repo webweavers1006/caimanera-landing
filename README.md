@@ -57,9 +57,11 @@ La app de Caimanera debe correr en `http://localhost:3001` para que los CTA func
 Ejemplo:
 
 ```env
-NEXT_PUBLIC_APP_URL="http://localhost:3001"
+NEXT_PUBLIC_APP_URL="https://app.caimaneraapp.online"
 NEXT_PUBLIC_SITE_URL="http://127.0.0.1:5000"
 ```
+
+Para desarrollo local de la app, usa `NEXT_PUBLIC_APP_URL="http://localhost:3001"`.
 
 ## Integración con la app
 
@@ -158,7 +160,22 @@ pnpm build
 pnpm start
 ```
 
-Configura `NEXT_PUBLIC_APP_URL` y `NEXT_PUBLIC_SITE_URL` en el entorno de producción y coloca HTTPS delante del sitio. Con `pnpm start`, Next escucha en `127.0.0.1:5000`, listo para Nginx/Caddy en el mismo servidor.
+Configura `NEXT_PUBLIC_APP_URL` y `NEXT_PUBLIC_SITE_URL` **antes del build** (las variables `NEXT_PUBLIC_*` se fijan en tiempo de compilación) y coloca HTTPS delante del sitio.
+
+### PM2
+
+El repo incluye `ecosystem.config.js`, con el proceso `caimanera-landing` configurado en el puerto 5000 y escuchando en `127.0.0.1` (para Nginx/Caddy en el mismo servidor):
+
+```bash
+NEXT_PUBLIC_APP_URL="https://app.caimaneraapp.online" \
+NEXT_PUBLIC_SITE_URL="https://tu-dominio-de-la-landing" \
+pnpm build
+
+pm2 start ecosystem.config.js
+pm2 save
+```
+
+Con eso, Next escucha en `127.0.0.1:5000`, listo para Nginx/Caddy en el mismo servidor. Si necesitas acceso directo por LAN, cambia `-H 127.0.0.1` por `-H 0.0.0.0` en el ecosystem.
 
 ## Créditos de imágenes
 
